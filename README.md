@@ -1,4 +1,4 @@
-# bank-project
+# Bank-Project
 Bank Application with Spring Framework
 
 Welcome to our Bank Application project developed using the powerful Spring Framework! This open-source project aims to provide a robust and secure banking solution for both customers and administrators. With cutting-edge technology and best practices, we strive to deliver a seamless banking experience.
@@ -31,3 +31,10 @@ To get started with the project, follow these steps:
     Navigate to the project directory: cd bank-application
     Build the project using Maven/Gradle: mvn clean install 
     Run the application: java -jar target/bank-application.jar
+    
+Contributing
+
+We welcome contributions from the community! If you find a bug or have an idea for an enhancement, feel free to open an issue or submit a pull request. Check out our Contributing Guidelines for more information.
+License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
