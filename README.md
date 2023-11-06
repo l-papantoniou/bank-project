@@ -1,4 +1,4 @@
-# Bank-Project
+# Bank-Project  🏦
 Bank Application with Spring Framework
 
 Welcome to our Bank Application project developed using the powerful Spring Framework! This open-source project aims to provide a robust and secure banking solution for both customers and administrators. With cutting-edge technology and best practices, we strive to deliver a seamless banking experience.
