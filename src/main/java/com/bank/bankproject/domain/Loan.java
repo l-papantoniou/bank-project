@@ -38,14 +38,14 @@ public class Loan implements Serializable {
     /*
      * Ο πελάτης που έχει λάβει το δάνειο
      */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
     /*
      * Ο υπάλληλος που είναι υπεύθυνος για το δάνειο
      */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id")
     private Employee employee;
 

@@ -10,6 +10,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -26,18 +27,18 @@ public class LoanInstallmentMovement implements Serializable {
     @SequenceGenerator(name = "seq_loan_installment_movement", sequenceName = "seq_loan_installment_movement", allocationSize = 1)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
     /*
      * Αν είναι για επιστροφή ή για προσθήκη
      */
-    @Column(name = "status")
+    @Column(name = "status", length = 300)
     private String status;
 
     /*
-     *  Hμερομηνία καταώρησης πληρωμής
+     *  Hμερομηνία καταχώρησης πληρωμής
      */
     @Column(name = "payment_date", length = 300)
     private LocalDate paymentDate;
@@ -48,5 +49,16 @@ public class LoanInstallmentMovement implements Serializable {
     @Column(name = "amount_paid", length = 300)
     private Double amountPaid;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LoanInstallmentMovement that = (LoanInstallmentMovement) o;
+        return Objects.equals(id, that.id);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

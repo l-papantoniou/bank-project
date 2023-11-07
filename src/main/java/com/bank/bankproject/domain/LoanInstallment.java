@@ -31,7 +31,7 @@ public class LoanInstallment implements Serializable {
     @SequenceGenerator(name = "seq_loan_installment", sequenceName = "seq_loan_installment", allocationSize = 1)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "loan_id")
     private Loan loan;
 
@@ -47,7 +47,7 @@ public class LoanInstallment implements Serializable {
     /*
      *  Hμερομηνία έναρξης δόσεων
      */
-    @Column(name = "start_date", length = 300)
+    @Column(name = "start_date")
     private LocalDate startDate;
 
     /*
