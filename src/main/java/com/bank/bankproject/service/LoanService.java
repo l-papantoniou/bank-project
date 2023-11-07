@@ -69,13 +69,13 @@ public class LoanService {
 
     @Transactional
     public void delete(Long id) {
-        log.debug("Request to delete AsAssets : {}", id);
+        log.debug("Request to delete Loan : {}", id);
         loanRepository.deleteById(id);
     }
 
     @Transactional(readOnly = true)
     public Optional<Loan> findById(Long id) {
-        log.debug("Request to get a AsAsset by its id : {}", id);
+        log.debug("Request to get a Loan by its id : {}", id);
         return loanRepository.findById(id);
     }
 
