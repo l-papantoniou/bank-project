@@ -2,6 +2,7 @@ package com.bank.bankproject.handler;
 
 import com.bank.bankproject.exception.ErrorMessage;
 import com.bank.bankproject.exception.NotFoundException;
+import com.bank.bankproject.exception.NotValidDataException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -25,8 +26,13 @@ public class ControllerExceptionHandler {
     private MessageSource messageSource;
 
     @ExceptionHandler(value = {NotFoundException.class})
-    public ResponseEntity<ErrorMessage> handleOsddyddRuntimeException(NotFoundException exception, WebRequest request, Locale locale) {
+    public ResponseEntity<ErrorMessage> handleNotFoundException(NotFoundException exception, WebRequest request, Locale locale) {
         return getErrorResponseEntity(request, locale, "exception.notFoundException", HttpStatus.UNPROCESSABLE_ENTITY, exception.getMessage());
+    }
+
+    @ExceptionHandler(value = {NotValidDataException.class})
+    public ResponseEntity<ErrorMessage> handleNotValidDataException(NotFoundException exception, WebRequest request, Locale locale) {
+        return getErrorResponseEntity(request, locale, "exception.notValidDataException", HttpStatus.UNPROCESSABLE_ENTITY, exception.getMessage());
     }
 
     private ResponseEntity<ErrorMessage> getErrorResponseEntity(WebRequest request, Locale locale, String errorMessage, HttpStatus httpStatus, String exceptionMessage) {
