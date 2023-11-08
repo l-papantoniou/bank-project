@@ -31,7 +31,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
         // Extract the Authorization header from the incoming request
-        final String authHeader = request.getHeader("Authorzation");
+        final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String userEmail;
         // If the Authorization header is missing or does not start with "Bearer ", proceed to the next filter
