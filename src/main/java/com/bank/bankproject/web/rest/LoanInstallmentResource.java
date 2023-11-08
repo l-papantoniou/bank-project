@@ -23,7 +23,7 @@ import java.util.Optional;
  * REST controller for managing {@link LoanInstallment}.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("api")
 public class LoanInstallmentResource {
 
     private final Logger log = LoggerFactory.getLogger(LoanInstallmentResource.class);

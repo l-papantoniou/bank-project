@@ -23,7 +23,7 @@ import java.util.Optional;
  * REST controller for managing {@link Customer}.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("api")
 public class CustomerResource {
 
     private final Logger log = LoggerFactory.getLogger(CustomerResource.class);

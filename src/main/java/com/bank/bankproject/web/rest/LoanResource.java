@@ -24,7 +24,7 @@ import java.util.Optional;
  * REST controller for managing {@link Loan}.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("api")
 public class LoanResource {
 
     private final Logger log = LoggerFactory.getLogger(LoanResource.class);
@@ -59,7 +59,7 @@ public class LoanResource {
         }
         LoanDto result = loanService.save(loanDto);
         return ResponseEntity
-                .created(new URI("/api/loan/" + result.getId()))
+                .created(new URI("api/loan/" + result.getId()))
                 .body(result);
     }
 

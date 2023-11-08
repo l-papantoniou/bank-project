@@ -24,7 +24,7 @@ import java.util.Optional;
  * REST controller for managing {@link Employee}.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("api")
 public class EmployeeResource {
 
     private final Logger log = LoggerFactory.getLogger(EmployeeResource.class);
