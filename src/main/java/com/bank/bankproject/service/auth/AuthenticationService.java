@@ -3,14 +3,20 @@ package com.bank.bankproject.service.auth;
 import com.bank.bankproject.auth.AuthenticationRequest;
 import com.bank.bankproject.auth.AuthenticationResponse;
 import com.bank.bankproject.auth.RegisterRequest;
+import com.bank.bankproject.domain.Role;
 import com.bank.bankproject.domain.User;
+import com.bank.bankproject.enums.Roles;
 import com.bank.bankproject.security.config.JwtService;
+import com.bank.bankproject.service.RoleService;
 import com.bank.bankproject.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +27,8 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
 
     private final JwtService jwtService;
+
+    private final RoleService roleService;
 
     private final AuthenticationManager authenticationManager;
 
@@ -66,7 +74,12 @@ public class AuthenticationService {
         user.setLastName(request.getLastname());
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-//        user.setRoles(Set.of(Role.USER));
+
+        // Assign default role to the new user
+        Set<Role> roles = new HashSet<>();
+        roles.add(roleService.findByDescription(Roles.ROLE_USER.getDescription()));
+        user.setRoles(roles);
+
 
         return user;
     }

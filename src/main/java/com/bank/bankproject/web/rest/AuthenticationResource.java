@@ -1,4 +1,4 @@
-package com.bank.bankproject.web.rest.auth;
+package com.bank.bankproject.web.rest;
 
 import com.bank.bankproject.auth.AuthenticationRequest;
 import com.bank.bankproject.auth.AuthenticationResponse;
@@ -54,12 +54,5 @@ public class AuthenticationResource {
 
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<String> test()
-            throws URISyntaxException {
-        log.debug("REST request to authenticate a user ");
-        return ResponseEntity.ok("hello WORLD");
-
-    }
 
 }
