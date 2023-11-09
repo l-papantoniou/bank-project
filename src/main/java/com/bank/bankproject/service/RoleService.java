@@ -4,6 +4,7 @@ import com.bank.bankproject.domain.Role;
 import com.bank.bankproject.repository.RoleRepository;
 import com.bank.bankproject.service.dto.RoleDto;
 import com.bank.bankproject.service.mapper.RoleMapper;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional
 public class RoleService {
+    public static final String ROLE_NOT_FOUND = "Role not found";
     private final Logger log = LoggerFactory.getLogger(RoleService.class);
 
     private final RoleRepository roleRepository;
@@ -26,7 +28,7 @@ public class RoleService {
 
     @Transactional
     public RoleDto save(RoleDto roleDto) {
-        log.debug("Request to save Role : {}", roleDto);
+        log.debug("Request to save Roles : {}", roleDto);
         Role role = roleMapper.toEntity(roleDto);
         role = roleRepository.save(role);
         return roleMapper.toDto(role);
@@ -34,7 +36,7 @@ public class RoleService {
 
     @Transactional
     public Role save(Role role) {
-        log.debug("Request to save Role : {}", role);
+        log.debug("Request to save Roles : {}", role);
         role = roleRepository.save(role);
         return role;
     }
@@ -62,20 +64,32 @@ public class RoleService {
 
     @Transactional(readOnly = true)
     public Optional<RoleDto> findOne(Long id) {
-        log.debug("Request to get Role : {}", id);
+        log.debug("Request to get Roles : {}", id);
         return roleRepository.findById(id).map(roleMapper::toDto);
     }
 
     @Transactional
     public void delete(Long id) {
-        log.debug("Request to delete Role : {}", id);
+        log.debug("Request to delete Roles : {}", id);
         roleRepository.deleteById(id);
     }
 
     @Transactional(readOnly = true)
     public Optional<Role> findById(Long id) {
-        log.debug("Request to get a Role by its id : {}", id);
+        log.debug("Request to get a Roles by its id : {}", id);
         return roleRepository.findById(id);
     }
+
+    @Transactional(readOnly = true)
+    public Role findByDescription(String description) {
+        log.debug("Request to get a Roles by its description : {}", description);
+        Optional<Role> role = roleRepository.findRoleByDescription(description);
+        if (role.isEmpty()) {
+            throw new EntityNotFoundException(ROLE_NOT_FOUND);
+        }
+        return role.get();
+    }
+
+
 }
 
