@@ -4,22 +4,17 @@ import lombok.*;
 
 import java.io.Serializable;
 
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-
-public class UserDto implements Serializable {
+public class RoleDto implements Serializable {
 
     private Long id;
 
-    private String firstName;
+    private String description;
 
-    private String lastName;
-
-    private String email;
-
-    private String password;
 
 }

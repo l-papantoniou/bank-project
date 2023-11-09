@@ -4,7 +4,6 @@ import com.bank.bankproject.auth.AuthenticationRequest;
 import com.bank.bankproject.auth.AuthenticationResponse;
 import com.bank.bankproject.auth.RegisterRequest;
 import com.bank.bankproject.domain.User;
-import com.bank.bankproject.enums.Role;
 import com.bank.bankproject.security.config.JwtService;
 import com.bank.bankproject.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -67,7 +66,7 @@ public class AuthenticationService {
         user.setLastName(request.getLastname());
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRole(String.valueOf(Role.USER));
+//        user.setRoles(Set.of(Role.USER));
 
         return user;
     }

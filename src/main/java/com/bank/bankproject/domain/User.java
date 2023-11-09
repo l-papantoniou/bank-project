@@ -1,15 +1,12 @@
 package com.bank.bankproject.domain;
 
-import com.bank.bankproject.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Getter
 @Setter
@@ -18,7 +15,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "bank_user")
+@Table(name = "_user")
 public class User implements UserDetails {
 
     @Id
@@ -38,9 +35,12 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    //    @Enumerated(EnumType.STRING)
-    @Column(name = "role")
-    private String role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @ToString.Exclude
+    private Set<Role> roles;
 
     @Override
     public boolean equals(Object o) {
@@ -57,7 +57,11 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role));
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getDescription()));
+        }
+        return authorities;
     }
 
     @Override
