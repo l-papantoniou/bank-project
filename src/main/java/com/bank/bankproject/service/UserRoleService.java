@@ -2,6 +2,7 @@ package com.bank.bankproject.service;
 
 import com.bank.bankproject.domain.UserRole;
 import com.bank.bankproject.domain.UserRoleId;
+import com.bank.bankproject.exception.NotValidDataException;
 import com.bank.bankproject.repository.UserRoleRepository;
 import com.bank.bankproject.service.dto.UserRoleDto;
 import com.bank.bankproject.service.mapper.UserRoleMapper;
@@ -20,6 +21,7 @@ import java.util.Optional;
 @Transactional
 public class UserRoleService {
 
+    public static final String USER_MUST_NOT_BE_NULL = "User must not be null";
     private final Logger log = LoggerFactory.getLogger(UserRoleService.class);
 
     private final UserRoleRepository userRoleRepository;
@@ -30,6 +32,17 @@ public class UserRoleService {
     @Transactional
     public UserRoleDto save(UserRoleDto userRoleDto) {
         log.debug("Request to save a userRole : {}", userRoleDto);
+
+        validateUserRoleDto(userRoleDto);
+
+        //create the PK  id by combining the ids of the two fields
+        UserRoleId id = new UserRoleId();
+        id.setUserId(userRoleDto.getUser().getId());
+        id.setRoleId(userRoleDto.getRole().getId());
+
+        //set the PK
+        userRoleDto.setUserRoleId(id);
+
         UserRole userRole = userRoleMapper.toEntity(userRoleDto);
         userRole = userRoleRepository.save(userRole);
         return userRoleMapper.toDto(userRole);
@@ -81,5 +94,16 @@ public class UserRoleService {
         return userRoleRepository.findById(id);
     }
 
+    /**
+     * This method validates the userRoleDto
+     */
+    private void validateUserRoleDto(UserRoleDto userRoleDto) {
+        if (userRoleDto.getUser() == null || userRoleDto.getUser().getId() == null) {
+            throw new NotValidDataException(USER_MUST_NOT_BE_NULL);
+        }
+        if (userRoleDto.getRole() == null || userRoleDto.getRole().getId() == null) {
+            throw new NotValidDataException("Role must not be null");
+        }
+    }
 
 }
